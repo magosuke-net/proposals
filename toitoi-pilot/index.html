@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>まごすけみまもり隊 × ほほえみの郷トイトイ 共同実証実験のご提案</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #1a1a2e;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 16:9 コンテナ */
+  .presentation-wrapper {
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    position: relative;
+  }
+
+  .slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  /* 共通スライド — paddingなし。h2が自然に全幅を占める */
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 6% 0;   /* 下6%はnavバー分の余白 */
+    position: absolute;
+    top: 0; left: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #fff;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; }
+
+  /* タイトルスライド */
+  .slide-title {
+    background: linear-gradient(135deg, #2d6a4f, #40916c);
+    justify-content: center;
+    padding: 6%;
+  }
+  .slide-title h1 {
+    color: white;
+    font-size: clamp(1.8rem, 4.2vw, 3.2rem);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .slide-title .subtitle {
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(1rem, 2.1vw, 1.5rem);
+    line-height: 1.8;
+  }
+
+  /* ヘッダー — paddingなしのslide内でwidth:100%が自動で全幅 */
+  h2 {
+    width: 100%;
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+    color: #fff;
+    background: #2d6a4f;
+    padding: 1.6% 5%;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  /* スライド本文エリア */
+  .slide-body {
+    flex: 1;
+    padding: 2% 5% 1%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: clamp(1rem, 1.9vw, 1.35rem);
+    color: #2d6a4f;
+    margin: 2% 0 1%;
+    font-weight: bold;
+  }
+
+  p, li {
+    font-size: clamp(0.95rem, 1.9vw, 1.3rem);
+    line-height: 1.7;
+    color: #444;
+  }
+
+  ul { padding-left: 1.4rem; }
+  li { margin-bottom: 0.15rem; }
+
+  .box {
+    background: #f0faf4;
+    border: 2px solid #74c69d;
+    border-radius: 8px;
+    padding: 2% 3%;
+    margin: 2% 0;
+  }
+  .box p, .box li { color: #1b4332; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3%;
+    margin: 1% 0;
+    flex: 1;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2%;
+    margin: 1% 0;
+    flex: 1;
+  }
+
+  .card {
+    background: #f0faf4;
+    border: 2px solid #74c69d;
+    border-radius: 8px;
+    padding: 3%;
+  }
+  .card h3 { margin-top: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2% 0;
+    font-size: clamp(0.9rem, 1.7vw, 1.15rem);
+  }
+  th {
+    background: #40916c;
+    color: white;
+    padding: 1.5% 2%;
+    text-align: left;
+  }
+  td {
+    padding: 1.2% 2%;
+    border-bottom: 1px solid #d8f3dc;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f6fdf8; }
+
+  .consult-item {
+    border-left: 5px solid #40916c;
+    padding: 1% 3%;
+    margin: 1.5% 0;
+    background: #f6fdf8;
+    border-radius: 0 6px 6px 0;
+  }
+  .consult-item .label {
+    font-size: clamp(1rem, 1.9vw, 1.3rem);
+    font-weight: bold;
+    color: #2d6a4f;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ナビゲーション */
+  .nav {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+    background: rgba(0,0,0,0.70);
+    gap: 3%;
+    z-index: 100;
+  }
+  .nav button {
+    background: #40916c;
+    color: white;
+    border: none;
+    padding: 0.6% 4%;
+    border-radius: 20px;
+    font-size: clamp(0.8rem, 1.4vw, 1rem);
+    cursor: pointer;
+  }
+  .nav button:disabled { background: #555; cursor: default; }
+  .page-indicator {
+    color: white;
+    font-size: clamp(0.75rem, 1.3vw, 0.95rem);
+    min-width: 55px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="presentation-wrapper">
+<div class="slides">
+
+<!-- ====== スライド1: タイトル ====== -->
+<div class="slide slide-title active" id="slide-1">
+  <h1>まごすけみまもり隊 × ほほえみの郷トイトイ<br>共同実証実験のご提案</h1>
+</div>
+
+<!-- ====== スライド2: コンテストの結果報告 ====== -->
+<div class="slide" id="slide-2">
+  <h2>コンテストの結果報告</h2>
+  <div class="slide-body">
+    <ul>
+      <li>2026年3月、高齢者向けITサポート事業「まごすけみまもり隊」を構想し、起業コンテストに出場しました</li>
+      <li>残念ながら賞の受賞には至りませんでしたが、宇部市・山口市の行政関係者の方から<br>
+        <strong>「社会的意義がある、ぜひ実現してほしい」</strong>とお言葉をいただきました</li>
+      <li>以前お話しさせていただいた通り、ぜひまず地域でのサービス化を一緒に進めていただけたらと思っています</li>
+    </ul>
+    <div class="box" style="margin-top: 4%;">
+      <p><strong>現在の状況：</strong>2026年3月、個人事業主として正式に開業届を提出しました。<br>
+      座組をしっかり組んだうえで、実証実験から始めたいと考えています。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== スライド3: まごすけみまもり隊とは ====== -->
+<div class="slide" id="slide-3">
+  <h2>まごすけみまもり隊とは</h2>
+  <div class="slide-body">
+    <p style="margin-bottom: 1.5%;">コンセプト：<strong>「地区のまご」として、高齢者が地域の中で孤立しないようにつなぐ</strong></p>
+    <div class="three-col">
+      <div class="card">
+        <h3>高齢者の方へ</h3>
+        <ul>
+          <li>Alexa端末を設置し、家族・友人・地域の人と気軽に話せるように</li>
+          <li>機器の操作はすべてサポート</li>
+          <li>定期的な訪問で安心していただく</li>
+          <li>困っていることを一緒に解決。一人にしない、孤立させない</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>ご家族の方へ</h3>
+        <ul>
+          <li>遠方からでも顔を見て話せる安心感</li>
+          <li>地域の人がサポートしてくれる体制があれば、離れて暮らすことへの不安が減る</li>
+          <li>帰省した時に、純粋に帰省を楽しめる</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>地域の事業者の方へ</h3>
+        <ul>
+          <li>高齢者とのやり取りのデジタル化で、これまで手間だったことが楽になる</li>
+          <li>これまでできなかったことへの足がかりになる</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <p><strong>目指すもの：</strong>高齢者の孤立という問題を、各家庭に任せるのではなく地域みんなで解決できる仕組みに。<br>
+      高齢者の方を支援することで、現役世代の方の負担を軽減し、ご家族とより良い関係を築くことができると考えています。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== スライド4: 実証実験を一緒に ====== -->
+<div class="slide" id="slide-4">
+  <h2>共同で実証実験を行わせていただきたいです</h2>
+  <div class="slide-body">
+    <div class="box">
+      <p><strong>高齢者3名程度のお宅にAlexa端末を設置し、3ヶ月間使っていただく</strong></p>
+    </div>
+    <h3>具体的な流れ</h3>
+    <ul>
+      <li>Alexa端末・Wi-Fiを設置し接続</li>
+      <li>まず家族とビデオ通話ができるように設定。慣れてきたらご友人も追加</li>
+      <li>トイトイとの連携・移動販売へのリクエスト機能を試す</li>
+      <li>電話や紙でやり取りしていることをデジタルに置き換えられないか実験</li>
+      <li>まごすけとして有田が定期的に訪問し、使用感の確認・サポートを行う</li>
+      <li>訪問を行う中で発見した高齢者の個別の課題に対応（いわゆるご用聞きのイメージ）</li>
+    </ul>
+    <table style="margin-top: 3%;">
+      <tr><th>期間</th><th>対象</th><th>エリア</th></tr>
+      <tr><td>3ヶ月（4〜6月予定）</td><td>高齢者1〜2名から</td><td>可能であれば移動販売車のルート</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ====== スライド5: 役割分担 ====== -->
+<div class="slide" id="slide-5">
+  <h2>役割分担（座組）</h2>
+  <div class="slide-body">
+    <div class="two-col">
+      <div>
+        <table>
+          <tr><th colspan="2">有田（まごすけみまもり隊）</th></tr>
+          <tr><td>機器準備・費用</td><td>Alexa端末・Wi-Fi機器の手配、費用全額負担</td></tr>
+          <tr><td>アカウント・設定</td><td>Amazonアカウントおよびアプリのセットアップ一式</td></tr>
+          <tr><td>設置・レクチャー</td><td>現地設置、操作説明</td></tr>
+          <tr><td>継続サポート</td><td>定期訪問、技術的なトラブル対応</td></tr>
+        </table>
+      </div>
+      <div>
+        <table>
+          <tr><th colspan="2">ほほえみの郷トイトイさん</th></tr>
+          <tr><td>高齢者の発掘</td><td>実験に前向きな方のご紹介</td></tr>
+          <tr><td>設置時の同行</td><td>初回設置に同行いただきたい</td></tr>
+          <tr><td>地域への展開</td><td>ご近所・ご友人への広がりを探っていただく</td></tr>
+          <tr><td>事業アイデア</td><td>事業として何が有用かを一緒に考えていただきたい</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== スライド6: ご相談項目 ====== -->
+<div class="slide" id="slide-6">
+  <h2>ご相談項目</h2>
+  <div class="slide-body">
+    <div class="consult-item">
+      <div class="label">① 一次受付をどうするか</div>
+      <ul>
+        <li>宇部市在住のため（阿東町まで車で1.5時間）、急な問い合わせに対応が難しい</li>
+        <li>トイトイさんの既存事業（移動販売業務など）の妨げにならない形で、窓口をどう作るか検討したい</li>
+        <li>訪問頻度については月1回に限らず、行けるときは積極的に伺いたい</li>
+      </ul>
+    </div>
+    <div class="consult-item">
+      <div class="label">② 料金についての相談</div>
+      <ul>
+        <li>現在の想定：機器設置代行・月次訪問・ご用聞きを含め、月額1.5万円（＋通信費）</li>
+        <li>この料金設定について、率直なご意見をいただきたい</li>
+        <li>1.5万円に見合うサービス内容とするならば、何が必要か。高田さん・トイトイさんの目線でアドバイスをいただきたい</li>
+        <li>これまでの活動や実証実験等で活用された補助金についても、ぜひ教えていただきたい</li>
+      </ul>
+    </div>
+    <div class="consult-item">
+      <div class="label">③ その他、相談・確認事項</div>
+      <ul>
+        <li>トイトイさん側でご要望・懸念点があればぜひ聞かせてください</li>
+        <li>実験をやってみて困ったことは随時相談しながら進めていきたいです</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== スライド7: まとめ ====== -->
+<div class="slide" id="slide-7">
+  <h2>まとめ</h2>
+  <div class="slide-body">
+    <p style="margin-bottom: 2%;">
+      「まごすけみまもり隊」が技術・機器・ITの専門性を、「ほほえみの郷トイトイ」が地域・高齢者との深いつながりを持っています。<br>
+      現場のリアルに沿った実証実験を行い、阿東地域から高齢者問題に対する解決策を模索できればと思います。
+    </p>
+    <h3 style="margin-top: 3%;">会議にてお話させていただきたいこと</h3>
+    <ul>
+      <li>実証実験全体に関する方向性の確認</li>
+      <li>実験に参加いただける高齢者の方の目処</li>
+      <li>一次受付・料金・補助金についての大まかな方向性</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /slides -->
+
+<div class="nav">
+  <button id="prev" onclick="changeSlide(-1)" disabled>◀ 前へ</button>
+  <span class="page-indicator" id="indicator">1 / 7</span>
+  <button id="next" onclick="changeSlide(1)">次へ ▶</button>
+</div>
+</div><!-- /presentation-wrapper -->
+
+<script>
+  let current = 1;
+  const total = 7;
+  function changeSlide(dir) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    current = Math.max(1, Math.min(total, current + dir));
+    document.getElementById('slide-' + current).classList.add('active');
+    document.getElementById('indicator').textContent = current + ' / ' + total;
+    document.getElementById('prev').disabled = current === 1;
+    document.getElementById('next').disabled = current === total;
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+</script>
+</body>
+</html>
