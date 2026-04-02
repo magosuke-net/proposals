@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>近況報告 ／ 有田伊吹</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #2c2c2c;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .presentation-wrapper {
+    width: 1280px;
+    height: 720px;
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: top left;
+  }
+
+  .slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 52px 0;
+    position: absolute;
+    top: 0; left: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #fff;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; }
+
+  /* ===== 共通ヘッダー ===== */
+  .slide-header {
+    display: flex;
+    align-items: center;
+    padding: 24px 56px 16px;
+    border-bottom: 3px solid #1e3a5f;
+    gap: 16px;
+  }
+  .slide-number {
+    width: 36px;
+    height: 36px;
+    background: #1e3a5f;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .slide-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+  .slide-label {
+    margin-left: auto;
+    font-size: 13px;
+    color: #888;
+    background: #f0f4f8;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ===== 本文共通 ===== */
+  .slide-body {
+    flex: 1;
+    padding: 28px 56px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  /* ===== カード ===== */
+  .card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 28px;
+    border-left: 5px solid #2d6a9f;
+  }
+  .card.green  { border-left-color: #2d9f6a; }
+  .card.orange { border-left-color: #e07b39; }
+  .card.gray   { border-left-color: #999; background: #f2f2f2; }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .card-body {
+    font-size: 19px;
+    line-height: 1.7;
+    color: #222;
+  }
+
+  /* ===== リスト ===== */
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bullet-list li {
+    font-size: 20px;
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+    color: #222;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #2d6a9f;
+    font-size: 16px;
+    top: 4px;
+  }
+
+  /* ===== 2カラム ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+  }
+
+  /* ===== 3ステップフロー ===== */
+  .step-flow {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    flex: 1;
+  }
+  .step-item {
+    flex: 1;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+  .step-item:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #2d6a9f;
+    font-weight: 700;
+    z-index: 1;
+  }
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: #1e3a5f;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e3a5f;
+    line-height: 1.4;
+  }
+  .step-desc {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* ===== ナビゲーションバー ===== */
+  .nav-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 52px;
+    background: #1e3a5f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    color: #fff;
+  }
+  .nav-bar button {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 6px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .nav-bar button:hover { background: rgba(255,255,255,0.25); }
+  .nav-bar button:disabled { opacity: 0.3; cursor: default; }
+  .nav-bar .progress {
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+  .nav-bar .slide-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .nav-bar .dot {
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-bar .dot.active { background: #fff; }
+</style>
+</head>
+<body>
+
+<div class="presentation-wrapper" id="wrapper">
+  <div class="slides" id="slides">
+
+    <!-- ===== SLIDE 1: コンテスト参加 ===== -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-number">1</div>
+        <h2>ビジネスコンテストへの参加</h2>
+        <div class="slide-label">近況報告</div>
+      </div>
+      <div class="slide-body">
+        <div class="card">
+          <div class="card-body">
+            宇部市主催のビジネスコンテストに「<strong>まごすけ</strong>」というプランで参加しました。<br>
+            受賞には至りませんでしたが、行政関係者から
+            「<strong>社会的意義がとてもある、ぜひ実現してほしい</strong>」という評価をいただきました。
+          </div>
+        </div>
+
+        <div style="font-size:16px; font-weight:700; color:#555; padding: 4px 0;">まごすけ ／ ビジネスの概要</div>
+
+        <div class="step-flow">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-title">高齢者と家族を<br>つなぐ</div>
+            <div class="step-desc">
+              Amazon Echo（Alexa）を高齢者宅に設置。<br>
+              声だけで家族に連絡・見守りができる仕組みを提供します。
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-title">地元の事業者と<br>連携する</div>
+            <div class="step-desc">
+              地域のスーパー、介護事業者などの既存ビジネスと組み合わせ、<br>
+              ITサポートをスポット提供できる体制を作ります。
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-title">データを地域課題の<br>解決に活かす</div>
+            <div class="step-desc">
+              利用状況・声がけデータを蓄積し、<br>
+              地域の行政・事業者と連携した見守り・生活支援へ展開します。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 2: 実証実験 ===== -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-number">2</div>
+        <h2>実証実験を開始します</h2>
+        <div class="slide-label">近況報告</div>
+      </div>
+      <div class="slide-body">
+        <div class="two-col">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div class="card green">
+              <div class="card-title">現在の状況</div>
+              <div class="card-body">
+                地元の移動販売事業者「トイトイ」と連携し、<br>
+                高齢者宅でのAlexa実証実験を開始することになりました。
+              </div>
+            </div>
+            <ul class="bullet-list">
+              <li>期間：2026年4〜6月（3ヶ月）</li>
+              <li>高齢者 ↔ 家族 ↔ まごすけの<br>3者をつなぐ仕組みが実際に動くかを検証</li>
+              <li>設置・運用・データ収集まですべて自分で担当</li>
+            </ul>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div class="card orange">
+              <div class="card-title">将来像</div>
+              <div class="card-body" style="font-size:17px;">
+                高齢者支援を入口に地域事業者との信頼関係を築き、<br>
+                <strong>Phase 2 では事業者のIT化・業務改善支援（有償）</strong>へ展開していきます。
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">この実験が示すもの</div>
+              <div class="card-body" style="font-size:17px;">
+                絵に描いた事業計画ではなく、<br>
+                自分の足で動かして検証していく姿勢を示します。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 3: AIコーチング ===== -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-number">3</div>
+        <h2>AI活用のコーチングを相談されています</h2>
+        <div class="slide-label">近況報告</div>
+      </div>
+      <div class="slide-body">
+        <div class="card green">
+          <div class="card-title">きっかけ</div>
+          <div class="card-body">
+            知り合いの事業者から「AIの使い方を教えてほしい」と声をかけてもらいました。<br>
+            ちょうどまごすけの立ち上げでClaude Codeを毎日フル活用していたこともあり、<br>
+            <strong>自分のノウハウを実践ベースで教えられると判断し、お受けすることにしました。</strong>
+          </div>
+        </div>
+        <div class="two-col">
+          <ul class="bullet-list">
+            <li>スモールビジネスの日常業務に刺さるAI活用を直接伝える</li>
+            <li>ツール紹介にとどまらず、実際に使いながら覚える形式</li>
+            <li>まごすけ事業を動かしながら培ったノウハウをそのまま展開</li>
+          </ul>
+          <div class="card">
+            <div class="card-title">今後の展開</div>
+            <div class="card-body" style="font-size:17px;">
+              地元事業者のAI活用支援として、<br>
+              まごすけと並ぶ収益の柱に育てていきます。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <!-- ナビゲーションバー -->
+  <div class="nav-bar" id="nav">
+    <button id="btn-prev" onclick="changeSlide(-1)" disabled>← 前へ</button>
+    <div class="slide-dots" id="dots"></div>
+    <span class="progress" id="progress">1 / 3</span>
+    <button id="btn-next" onclick="changeSlide(1)">次へ →</button>
+  </div>
+</div><!-- /wrapper -->
+
+<script>
+  const TOTAL = 3;
+  let current = 1;
+
+  function fitSlide() {
+    const w = window.innerWidth, h = window.innerHeight;
+    const scale = Math.min(w / 1280, h / 720);
+    const wrapper = document.getElementById('wrapper');
+    wrapper.style.transform = `scale(${scale})`;
+    wrapper.style.left = ((w - 1280 * scale) / 2) + 'px';
+    wrapper.style.top  = ((h - 720 * scale)  / 2) + 'px';
+  }
+  window.addEventListener('resize', fitSlide);
+  fitSlide();
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.onclick = () => goSlide(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goSlide(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    dotsEl.children[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    dotsEl.children[current - 1].classList.add('active');
+    document.getElementById('progress').textContent = current + ' / ' + TOTAL;
+    document.getElementById('btn-prev').disabled = current === 1;
+    document.getElementById('btn-next').disabled = current === TOTAL;
+  }
+
+  function changeSlide(dir) { goSlide(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      if (current < TOTAL) changeSlide(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      if (current > 1) changeSlide(-1);
+    }
+  });
+</script>
+</body>
+</html>

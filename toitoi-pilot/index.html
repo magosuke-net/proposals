@@ -76,6 +76,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
 
   h3 {
@@ -109,15 +110,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     margin: 8px 0;
-    flex: 1;
+    align-items: start;
   }
   .three-col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 14px;
     margin: 8px 0;
-    flex: 1 1 0;
-    min-height: 0;  /* 内容に合わせて縮む */
+    align-items: start;
   }
 
   .card {
@@ -208,14 +208,13 @@
   <h2>コンテストの結果報告</h2>
   <div class="slide-body">
     <ul>
-      <li>2026年3月、高齢者向けITサポート事業「まごすけみまもり隊」を構想し、起業コンテストに出場しました</li>
+      <li>2026年3月、高齢者向けITサポート事業「まごすけみまもり隊」を構想し「UBE STARTUPビジネスプランコンテスト2025」に出場しました</li>
       <li>残念ながら賞の受賞には至りませんでしたが、宇部市・山口市の行政関係者の方から<br>
         <strong>「社会的意義がある、ぜひ実現してほしい」</strong>とお言葉をいただきました</li>
-      <li>以前お話しさせていただいた通り、ぜひ阿東地域での実証実験を一緒に進めていただけたらと思っています</li>
+      <li>以前お話しさせていただいた通り、ぜひ阿東地域での実証実験を改めてご提案させていただければと思います</li>
     </ul>
     <div class="box" style="margin-top: 4%;">
-      <p><strong>現在の状況：</strong>2026年3月、個人事業主として開業届を提出しました。<br>
-      座組をしっかり組んだうえで、実証実験から始めたいと考えています。</p>
+      <p><strong>現在の状況：</strong>2026年3月、個人事業主として開業届を提出しました。座組をしっかり組んだうえで、実証実験から始めたいと考えています。</p>
     </div>
   </div>
 </div>
@@ -224,46 +223,87 @@
 <div class="slide" id="slide-3">
   <h2>まごすけみまもり隊とは</h2>
   <div class="slide-body">
-    <p style="margin-bottom: 1.5%;">コンセプト：<strong>「地区のまご」として、高齢者が地域の中で孤立しないようにつなぐことを目標としています</strong></p>
+    <p style="margin-bottom: 1.5%;"><strong>「地区のまご」として、高齢者が地域の中で孤立しないようにつなぐことを目標としています</strong></p>
     <div class="three-col">
       <div class="card">
         <h3>高齢者の方へ</h3>
         <ul>
-          <li>Alexa端末を設置し、家族・友人・地域の人と気軽に話せるように</li>
-          <li>機器の操作はすべてサポート</li>
-          <li>定期的な訪問で安心していただく</li>
-          <li>困っていることを一緒に解決。一人にしない、孤立させない</li>
+          <li>Alexa端末を設置し、家族・友人と気軽に顔を見て話せるように</li>
+          <li>機器の操作・設定はすべておまかせ</li>
+          <li>定期訪問で困りごとを一緒に解決</li>
+          <li>一人にしない、孤立させない</li>
         </ul>
       </div>
       <div class="card">
         <h3>ご家族の方へ</h3>
         <ul>
           <li>遠方からでも顔を見て話せる安心感</li>
-          <li>地域の人がサポートしてくれる体制があれば、離れて暮らすことへの不安が減る</li>
-          <li>帰省した時に、純粋に帰省を楽しめる</li>
+          <li>地域にサポートする人がいることで、離れて暮らす不安が減る</li>
+          <li>帰省したときに、純粋に帰省を楽しめる</li>
         </ul>
       </div>
       <div class="card">
         <h3>地域の事業者の方へ</h3>
         <ul>
-          <li>高齢者とのやり取りのデジタル化で、これまで手間だったことが楽になる</li>
-          <li>これまでできなかったことへの足がかりになる</li>
+          <li>高齢者とデジタルでつながる新しいチャネルができる</li>
+          <li>移動販売の注文・要望をAlexaで事前に把握できる</li>
+          <li>日程変更やお知らせをビデオ通話で手軽に伝えられる</li>
         </ul>
       </div>
     </div>
     <div class="box">
-      <p><strong>目指すもの：</strong>高齢者の孤立という問題を、各家庭に任せるのではなく地域みんなで解決できる仕組みに。<br>
-      高齢者の方を支援することで、現役世代の方の負担を軽減し、ご家族とより良い関係を築くことができると考えています。</p>
+      <p><strong>目指すもの：</strong>高齢者の孤立を、各家庭だけに任せるのではなく地域全体で支える仕組みに。現役世代・ご家族・地域事業者、それぞれの負担を減らしながら、高齢者が安心して暮らせる環境をつくります。</p>
     </div>
   </div>
 </div>
 
-<!-- ====== スライド4: 実証実験を一緒に ====== -->
+<!-- ====== スライド4: サービスの具体的な内容 ====== -->
 <div class="slide" id="slide-4">
-  <h2>共同で実証実験を行わせていただきたいです</h2>
+  <h2>サービスの具体的な内容</h2>
+  <div class="slide-body">
+    <p style="margin-bottom: 1.5%;"><strong>現在私が想定しているサービス内容です</strong></p>
+    <div class="three-col">
+      <div class="card">
+        <h3>① 初回設置（1回）</h3>
+        <ul>
+          <li>Alexa端末・Wi-Fi機器を現地に設置・接続</li>
+          <li>ご家族・ご友人とのビデオ通話を設定</li>
+          <li>「アレクサ、〇〇と電話して」が言えるまで一緒に練習</li>
+          <li>移動販売リクエスト機能の設定・使い方の確認</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>② 日常利用（毎日）</h3>
+        <ul>
+          <li>声だけで家族・友人とビデオ通話</li>
+          <li>地域事業者との連携（移動販売への注文リクエスト）</li>
+          <li>天気・ニュース・音楽など日常の利用</li>
+          <li>困ったときはアレクサ端末を通じて連絡</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>③ 定期訪問（月1回以上）</h3>
+        <ul>
+          <li>使い勝手の確認・困りごとヒアリング</li>
+          <li>操作サポート・設定の更新</li>
+          <li>ご用聞き・世間話（孤立防止の核心）</li>
+          <li>新しい活用方法の提案</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <p><strong>実証実験でやりたいこと：</strong>実際に使っていただき、「何が便利か」「何が難しいか」「何が足りないか」をリアルな現場から学び、サービスの磨き込みをトイトイ様と一緒に行いたいと考えています。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== スライド5: 実証実験を一緒に ====== -->
+<div class="slide" id="slide-5">
+  <h2>役割分担の案</h2>
   <div class="slide-body">
     <div class="box">
-      <p><strong>高齢者3名程度のお宅にAlexa端末を設置し、サービス化に向けた課題を発見します</strong></p>
+      <p><strong>実証実験で行う工程・分担の案を仮置きしました</strong><br>
+      ※ 実験期間中、参加いただく高齢者の方からのサービス料はいただきません。機器・通信費用はすべて有田が負担します。</p>
     </div>
     <table>
       <tr>
@@ -274,18 +314,18 @@
       </tr>
       <tr>
         <td rowspan="3"><strong>準備</strong></td>
-        <td>Alexa端末・Wi-Fi機器の購入・動作確認</td>
+        <td>Alexa端末、Wi-Fi機器の購入・動作確認・アカウント準備</td>
         <td><strong>有田</strong></td>
         <td>実験開始前</td>
       </tr>
       <tr>
         <td>実験に参加いただける高齢者の選定・ご紹介</td>
-        <td><strong>トイトイさん</strong></td>
+        <td><strong>トイトイ様</strong></td>
         <td>実験開始前</td>
       </tr>
       <tr>
         <td>初回訪問の日程調整・同行のご確認</td>
-        <td><strong>有田 ＋ トイトイさん</strong></td>
+        <td><strong>有田 ＋ トイトイ様</strong></td>
         <td>実験開始前</td>
       </tr>
       <tr>
@@ -301,7 +341,7 @@
       </tr>
       <tr>
         <td>移動販売へのリクエスト機能の連携設定</td>
-        <td><strong>有田 ＋ トイトイさん</strong></td>
+        <td><strong>有田 ＋ トイトイ様</strong></td>
         <td>初回のみ</td>
       </tr>
       <tr>
@@ -312,62 +352,62 @@
       </tr>
       <tr>
         <td>高齢者からの一次受付窓口</td>
-        <td><strong>（ご相談）トイトイさん</strong></td>
+        <td><strong>（ご相談）トイトイ様</strong></td>
         <td>随時</td>
       </tr>
       <tr>
         <td>アレクサ端末を最大限に活用する方法の検討</td>
-        <td><strong>有田 ＋ トイトイさん</strong></td>
+        <td><strong>有田 ＋ トイトイ様</strong></td>
         <td>随時</td>
       </tr>
     </table>
   </div>
 </div>
 
-<!-- ====== スライド5: ご相談項目 ====== -->
-<div class="slide" id="slide-5">
+<!-- ====== スライド6: ご相談項目 ====== -->
+<div class="slide" id="slide-6">
   <h2>ご相談項目</h2>
   <div class="slide-body">
     <div class="consult-item">
       <div class="label">① 一次受付について</div>
       <ul>
-        <li>現在宇部駅周辺に住んでおり（阿東町まで車で約1時間半）、急なご連絡への対応が難しい状況です</li>
-        <li>トイトイさんの既存のご事業（移動販売など）のご負担にならない形で、窓口の設け方についてご相談させていただけますでしょうか</li>
-        <li>訪問頻度は月1回に限らず、伺える際は積極的にお訪ねしたいと考えております</li>
+        <li>現在宇部駅周辺に住んでおり（阿東町まで車で約1時間半）、急なご連絡への即時対応が難しい状況です</li>
+        <li>トイトイ様の既存業務にご負担をかけない範囲で、高齢者からの連絡窓口の設け方をご相談させてください</li>
       </ul>
     </div>
     <div class="consult-item">
-      <div class="label">② 料金について</div>
+      <div class="label">② 本番サービス化に向けた料金感について</div>
       <ul>
-        <li>現在の想定：機器設置代行・月次訪問・ご用聞きを含め、月額1.5万円（＋通信費）</li>
-        <li>この料金設定につきまして、率直なご意見をお聞かせいただけますと幸いです</li>
-        <li>月額1.5万円に見合うサービス内容とするために何が必要か、高田さん・トイトイさんのお立場からアドバイスをいただけますでしょうか</li>
-        <li>これまでのご活動や実証実験等で活用された補助金がございましたら、ぜひお教えいただけますと幸いです</li>
+        <li>本番サービスの想定価格：月額1.5万円（＋通信費 約4,500円）</li>
+        <li>地域の実情を踏まえ、この価格設定について率直なご意見をお聞かせください</li>
+        <li>活用できる補助金・助成金の情報がございましたら、ぜひ教えてください</li>
       </ul>
     </div>
     <div class="consult-item">
-      <div class="label">③ その他</div>
+      <div class="label">③ 実験開始にあたっての確認</div>
       <ul>
-        <li>トイトイさん側でご要望・ご懸念がございましたら、ぜひお聞かせください</li>
-        <li>実験を進める中で生じた課題は、随時ご相談しながら一緒に取り組んでまいりたいと思っております</li>
+        <li>必要な書類や取り決め（覚書など）があれば確認させてください</li>
+        <li>トイトイ様のご要望・ご懸念があればぜひお聞かせください</li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- ====== スライド6: まとめ ====== -->
-<div class="slide" id="slide-6">
+<!-- ====== スライド7: まとめ ====== -->
+<div class="slide" id="slide-7">
   <h2>まとめ</h2>
   <div class="slide-body">
-    <p style="margin-bottom: 2%;">
+    <p style="margin-bottom: 3%;">
       「まごすけみまもり隊」が技術・機器・ITの専門性を、「ほほえみの郷トイトイ様」が地域・高齢者との深いつながりを持っています。<br>
-      現場のリアルに沿った実証実験を行い、阿東地域から高齢者問題に対する解決策を模索できればと思います。
+      現場のリアルに沿った実証実験を行い、阿東地域から高齢者問題に対する解決策を一緒に模索できればと思います。
     </p>
-    <h3 style="margin-top: 3%;">会議にてお話させていただきたいこと</h3>
+    <h3>本日この場で確認させていただきたいこと</h3>
     <ul>
-      <li>実証実験全体に関する方向性の確認</li>
-      <li>実験に参加いただける高齢者の方の目処</li>
-      <li>一次受付・料金・補助金についての大まかな方向性</li>
+      <li>実証実験の方向性・進め方についての大まかな合意</li>
+      <li>参加いただける高齢者の方の目処</li>
+      <li>一次受付の設け方（既存業務への影響を踏まえて）</li>
+      <li>本番サービスの料金感・活用できる補助金について</li>
+      <li>実験開始にあたり必要な書類・取り決めの確認</li>
     </ul>
   </div>
 </div>
@@ -376,7 +416,7 @@
 
 <div class="nav">
   <button id="prev" onclick="changeSlide(-1)" disabled>◀ 前へ</button>
-  <span class="page-indicator" id="indicator">1 / 6</span>
+  <span class="page-indicator" id="indicator">1 / 7</span>
   <button id="next" onclick="changeSlide(1)">次へ ▶</button>
 </div>
 </div><!-- /presentation-wrapper -->
@@ -398,7 +438,7 @@
 
   // スライド切り替え
   let current = 1;
-  const total = 6;
+  const total = 7;
   function changeSlide(dir) {
     document.getElementById('slide-' + current).classList.remove('active');
     current = Math.max(1, Math.min(total, current + dir));
