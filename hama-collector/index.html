@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1b6ca8" />
+  <title>◯浜コレクター</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ログイン画面 -->
+    <section id="login-view" class="view active">
+      <div class="login-card">
+        <h1 class="brand">◯浜<br/>コレクター</h1>
+        <p class="tagline">大浜も小浜も、新しい浜もぜんぶ集めよう。</p>
+
+        <label class="field">
+          <span class="field-label">ニックネーム</span>
+          <input id="login-nickname" type="text" autocomplete="nickname" placeholder="たろう" maxlength="20" />
+        </label>
+
+        <label class="field">
+          <span class="field-label">合言葉</span>
+          <input id="login-passphrase" type="password" autocomplete="current-password" placeholder="ひみつの言葉" />
+        </label>
+
+        <button id="login-submit" class="primary-btn">入る</button>
+        <p id="login-error" class="error-msg" hidden></p>
+      </div>
+    </section>
+
+    <!-- メイン画面 -->
+    <section id="main-view" class="view">
+      <header class="app-header">
+        <h1>◯浜コレクター</h1>
+        <button id="logout-btn" class="ghost-btn" title="ログアウト">↩︎</button>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="list">一覧</button>
+        <button class="tab-btn" data-tab="add">追加</button>
+      </nav>
+
+      <!-- 一覧タブ -->
+      <div id="list-tab" class="tab-panel active">
+        <div class="list-controls">
+          <input id="search-box" type="search" placeholder="名前・場所・メモで検索" />
+          <button id="refresh-btn" class="ghost-btn" title="再読み込み">⟳</button>
+        </div>
+        <div id="list-status" class="status-msg">読み込み中…</div>
+        <ul id="hama-list" class="hama-list"></ul>
+      </div>
+
+      <!-- 追加タブ -->
+      <div id="add-tab" class="tab-panel">
+        <form id="add-form" class="add-form">
+          <label class="field">
+            <span class="field-label">名前 <span class="req">*</span></span>
+            <input name="name" type="text" required placeholder="例: 大浜" maxlength="60" />
+          </label>
+
+          <fieldset class="field kind-field">
+            <legend class="field-label">種別 <span class="req">*</span></legend>
+            <label class="radio">
+              <input type="radio" name="kind" value="person" checked />
+              <span>人名</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="kind" value="place" />
+              <span>地名</span>
+            </label>
+          </fieldset>
+
+          <label class="field">
+            <span class="field-label">出会った場所・シチュエーション</span>
+            <input name="encountered_at" type="text" placeholder="例: 沖縄旅行 / 大学サークル" maxlength="120" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">発見日</span>
+            <input name="found_on" type="date" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">メモ</span>
+            <textarea name="note" rows="3" maxlength="500" placeholder="自由に"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field-label">写真</span>
+            <input id="photo-input" name="photo" type="file" accept="image/*" />
+            <div id="photo-preview-wrap" hidden>
+              <img id="photo-preview" alt="プレビュー" />
+              <button type="button" id="photo-clear" class="ghost-btn">クリア</button>
+            </div>
+          </label>
+
+          <button type="submit" id="add-submit" class="primary-btn">登録する</button>
+          <p id="add-status" class="status-msg" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 詳細モーダル -->
+    <div id="detail-modal" class="modal" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-card">
+        <button class="modal-close ghost-btn" data-close-modal>×</button>
+        <div id="detail-body"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="github-client.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
